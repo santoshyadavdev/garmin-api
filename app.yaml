@@ -1,0 +1,47 @@
+runtime: python39  # Specify the Python runtime (e.g., python39 or python311)
+
+# Optional: Specify an instance class
+# instance_class: F2
+
+entrypoint: uvicorn main:app --host 0.0.0.0 --port $PORT  # Command to run the FastAPI app
+
+# Optional: Set environment variables
+env_variables:
+  ENV: "production"
+  DEBUG: "false"
+
+# Optional: Configure automatic scaling
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  target_throughput_utilization: 0.75
+  min_instances: 1
+  max_instances: 5
+
+# Optional: Static file serving configuration
+handlers:
+  - url: /static
+    static_dir: static
+
+  # Catch-all handler to direct all other traffic to your FastAPI app
+  - url: /.*
+    script: auto
+
+# Optional: Define the service account to use
+# service_account: your-service-account@your-project-id.iam.gserviceaccount.com
+
+# Optional: Configure network settings
+# network:
+#   session_affinity: true
+
+# Optional: Configure resources (memory, disk, etc.)
+# resources:
+#   memory_gb: 1
+#   disk_size_gb: 10
+
+# Optional: Configure the health check settings
+# health_check:
+#   enable_health_check: True
+#   check_interval_sec: 30
+#   timeout_sec: 4
+#   healthy_threshold: 2
+#   unhealthy_threshold: 10
